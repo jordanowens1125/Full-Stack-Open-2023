@@ -1,0 +1,10 @@
+sequenceDiagram
+    participant browser
+    participant server
+    note right of browser: Upon form submit: Form input is stored as content for the new note and a new Date is called and set to its date
+    note right of browser: The New note is added to the end of the notes list in browser
+    note right of browser: Then, notes are redrawn
+    browser->>server: browser sends POST  request to https://studies.cs.helsinki.fi/exampleapp/spa
+    activate server
+    
+    server-->>browser: Status code: 201, Message: Note created
