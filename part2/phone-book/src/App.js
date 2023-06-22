@@ -60,7 +60,7 @@ function App() {
           setSuccessMessage(`${response.name} has been created!`);
         })
         .catch(() => {
-          setErrorMessage(`${newName} was not created`)
+          setErrorMessage(`${newName} was not created`);
         });
       resetValues();
     } else {
@@ -88,19 +88,20 @@ function App() {
     resetValues();
   };
 
-  const deletePerson = (id) => {
-    let person = persons[id - 1];
+  const deletePerson = (person) => {
     let input = window.confirm(`Delete ${person.name} ?`);
     if (input) {
       personsServices
-        .deletePerson(id)
+        .deletePerson(person.id)
         .then(() => {
           setSuccessMessage(`${person.name} has been deleted!`);
         })
         .catch(() => {
-          setErrorMessage(`Information of ${person.name} has already been removed from server`);
+          setErrorMessage(
+            `Information of ${person.name} has already been removed from server`
+          );
         });
-      setPersons(persons.filter((user) => user.id !== id));
+      setPersons(persons.filter((user) => user.id !== person.id));
     }
   };
 
