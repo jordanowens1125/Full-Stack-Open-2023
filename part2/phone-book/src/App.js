@@ -3,12 +3,15 @@ import Persons from "./components/Persons";
 import PersonForm from "./components/PersonForm";
 import Filter from "./components/Filter";
 import personsServices from "./services/persons";
+import Notification from "./components/Notification";
 
 function App() {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [searchInput, setSearchInput] = useState("");
+  const [notification, setNotification] = useState(null);
+  const [success, setSuccess] = useState(null);
   const results =
     searchInput === ""
       ? persons
@@ -18,12 +21,29 @@ function App() {
         });
 
   useEffect(() => {
-    personsServices.getAll().then((response) => setPersons(response));
+    personsServices
+      .getAll()
+      .then((response) => {
+        setPersons(response);
+      })
+      .catch(() => {
+        setErrorMessage("Failed to retrieve data from server");
+      });
   }, []);
 
   const resetValues = () => {
     setNewName("");
     setNewNumber("");
+  };
+
+  const setSuccessMessage = (input) => {
+    setNotification(input);
+    setSuccess(true);
+  };
+
+  const setErrorMessage = (input) => {
+    setNotification(input);
+    setSuccess(false);
   };
 
   const createPerson = (e) => {
@@ -35,7 +55,13 @@ function App() {
     if (!userInList[0]) {
       personsServices
         .create({ name: newName, number: newNumber })
-        .then((response) => setPersons(persons.concat(response)));
+        .then((response) => {
+          setPersons(persons.concat(response));
+          setSuccessMessage(`${response.name} has been created!`);
+        })
+        .catch(() => {
+          setErrorMessage(`${newName} was not created`)
+        });
       resetValues();
     } else {
       let input = window.confirm(
@@ -50,11 +76,15 @@ function App() {
   const updatePerson = (person) => {
     personsServices
       .update(person.id, { name: newName, number: newNumber })
-      .then((response) =>
+      .then((response) => {
         setPersons(
           persons.map((user) => (user.id === person.id ? response : user))
-        )
-      );
+        );
+        setSuccessMessage(`${person.name} has been updated!`);
+      })
+      .catch(() => {
+        setErrorMessage(`${person} was not updated`);
+      });
     resetValues();
   };
 
@@ -64,13 +94,25 @@ function App() {
     if (input) {
       personsServices
         .deletePerson(id)
-        .then(() => setPersons(persons.filter((user) => user.id !== id)));
+        .then(() => {
+          setSuccessMessage(`${person.name} has been deleted!`);
+        })
+        .catch(() => {
+          setErrorMessage(`Information of ${person.name} has already been removed from server`);
+        });
+      setPersons(persons.filter((user) => user.id !== id));
     }
   };
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification
+        message={notification}
+        setMessage={setNotification}
+        success={success}
+        setSuccess={setSuccess}
+      />
       <Filter searchInput={searchInput} setSearchInput={setSearchInput} />
       <h3>Add a new</h3>
       <PersonForm
