@@ -9,11 +9,15 @@ function App() {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState("");
   const [showAll, setShowAll] = useState(true);
-  const [errorMessage, setErrorMessage] = useState("some error happened...");
+  const [errorMessage, setErrorMessage] = useState(null);
   useEffect(() => {
-    noteService.getAll().then((initialNotes) => {
-      setNotes(initialNotes);
-    });
+    try {
+      noteService.getAll().then((initialNotes) => {
+        setNotes(initialNotes);
+      });
+    } catch (error) {
+      setErrorMessage(`An error has occurred: ${error.message}`);
+    }
   }, []);
 
   const handleNoteChange = (event) => {
@@ -29,14 +33,14 @@ function App() {
       .then((returnedNote) => {
         setNotes(notes.map((note) => (note.id !== id ? note : returnedNote)));
       })
-      .catch((err) => {
+      .catch((error) => {
         setErrorMessage(
-          `Note '${note.content}' was already removed from server`
+          `An error has occurred: ${error.message}`
         );
         setTimeout(() => {
           setErrorMessage(null);
         }, 5000);
-        setNotes(notes.filter((n) => n.id !== id));
+        // setNotes(notes.filter((n) => n.id !== id));
       });
   };
   const addNote = (e) => {

@@ -1,8 +1,9 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const PORT = process.env.PORT || 3001;
 const morgan = require("morgan");
-
+app.use(cors());
 app.use(express.json());
 
 morgan.token("id", function getId(req) {
@@ -105,6 +106,19 @@ app.delete("/api/persons/:id", (req, res) => {
   const id = Number(req.params.id);
   persons = persons.filter((person) => person.id !== id);
   res.status(200);
+});
+
+app.put("/api/persons/:id", (req, res) => {
+  const id = Number(req.params.id);
+  let person = persons.find((person) => person.id === id);
+  if (person) {
+    let id = person.id
+    person = req.body;
+    person.id = id
+  } else {
+    res.status(400);
+  }
+  res.json(person);
 });
 
 app.listen(PORT);
