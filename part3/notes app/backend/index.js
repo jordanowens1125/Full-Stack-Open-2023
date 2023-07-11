@@ -6,6 +6,8 @@ const morgan = require("morgan");
 app.use(cors());
 app.use(express.json());
 
+app.use(express.static("dist"));
+
 morgan.token("id", function getId(req) {
   return req.id;
 });
@@ -83,6 +85,26 @@ app.post("/api/notes", (request, response) => {
   notes = notes.concat(note);
 
   response.json(note);
+});
+
+// update note
+app.put("/api/notes/:id", (request, response) => {
+  const id = Number(request.params.id);
+
+  notes = notes.map((note) => {
+    if (note.id === id) {
+      return request.body;
+    }
+    return note;
+  });
+
+  let note = notes.find((note) => note.id === id);
+
+  if (!note) {
+    return response.status(404).end();
+  }
+
+  response.json(request.body);
 });
 
 // del notes
