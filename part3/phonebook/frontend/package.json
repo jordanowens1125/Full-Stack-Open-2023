@@ -19,6 +19,7 @@
     "eject": "react-scripts eject",
     "server": "json-server -p3001 --watch db.json"
   },
+  "proxy": "https://fso-part3-phonebook-gs39.onrender.com",
   "eslintConfig": {
     "extends": [
       "react-app",
