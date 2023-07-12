@@ -52,8 +52,9 @@ app.get("/", (req, res) => {
   );
 });
 
-app.get("/info", (req, res) => {
+app.get("/info", async (req, res) => {
   const date = new Date();
+  const persons = await Person.find({});
   res.send(
     `<p>Phonebook has info for ${persons.length} people</p> ` + `<p>${date}</p>`
   );
@@ -83,9 +84,7 @@ app.post("/api/persons", (req, res) => {
         error: "Name already in use",
       });
     } else {
-      Person.create(req.body).then((newPerson) =>
-        res.send(newPerson)
-      );
+      Person.create(req.body).then((newPerson) => res.send(newPerson));
     }
   });
 });
@@ -99,7 +98,9 @@ app.delete("/api/persons/:id", (req, res) => {
 });
 
 app.put("/api/persons/:id", (req, res) => {
-  Person.findByIdAndUpdate(req.params.id, req.body).then((result) => res.json(result))
+  Person.findByIdAndUpdate(req.params.id, req.body).then((result) =>
+    res.json(result)
+  );
 });
 
 app.listen(PORT);
