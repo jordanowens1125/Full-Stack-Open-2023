@@ -3,10 +3,13 @@ const app = express();
 const cors = require("cors");
 const PORT = process.env.PORT || 3001;
 const morgan = require("morgan");
+const Note = require("./models/note");
+
 app.use(cors());
 app.use(express.json());
-
+require("dotenv").config();
 app.use(express.static("dist"));
+
 
 morgan.token("id", function getId(req) {
   return req.id;
@@ -23,50 +26,26 @@ app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms :body")
 );
 
-let notes = [
-  {
-    id: 1,
-    content: "HTML is easy",
-    important: true,
-  },
-  {
-    id: 2,
-    content: "Browser can execute only JavaScript",
-    important: false,
-  },
-  {
-    id: 3,
-    content: "GET and POST are the most important methods of HTTP protocol",
-    important: true,
-  },
-];
-
 app.get("/", (request, response) => {
   response.send("<h1>Hello World!</h1>");
 });
 
+const mongoose = require("mongoose");
+
 // get notes
 app.get("/api/notes", (request, response) => {
-  response.json(notes);
+  Note.find({}).then((notes) => {
+    response.json(notes);
+  });
 });
 
 app.get("/api/notes/:id", (request, response) => {
-  const id = Number(request.params.id);
-  const note = notes.find((note) => note.id === id);
-  if (note) {
+  Note.findById(request.params.id).then((note) => {
     response.json(note);
-  } else {
-    response.status(404).end();
-  }
+  });
 });
 
 // new notes
-
-const generateId = () => {
-  const maxId = notes.length > 0 ? Math.max(...notes.map((n) => n.id)) : 0;
-  return maxId + 1;
-};
-
 app.post("/api/notes", (request, response) => {
   const body = request.body;
 
@@ -76,43 +55,50 @@ app.post("/api/notes", (request, response) => {
     });
   }
 
-  const note = {
+  const note = new Note({
     content: body.content,
     important: body.important || false,
-    id: generateId(),
-  };
+  });
 
-  notes = notes.concat(note);
-
-  response.json(note);
+  note.save().then((savedNote) => {
+    response.json(savedNote);
+  });
 });
 
 // update note
-app.put("/api/notes/:id", (request, response) => {
-  const id = Number(request.params.id);
+// app.put("/api/notes/:id", (request, response) => {
+//   const id = Number(request.params.id);
 
-  notes = notes.map((note) => {
-    if (note.id === id) {
-      return request.body;
-    }
-    return note;
-  });
+//   notes = notes.map((note) => {
+//     if (note.id === id) {
+//       return request.body;
+//     }
+//     return note;
+//   });
 
-  let note = notes.find((note) => note.id === id);
+//   let note = notes.find((note) => note.id === id);
 
-  if (!note) {
-    return response.status(404).end();
-  }
+//   if (!note) {
+//     return response.status(404).end();
+//   }
 
-  response.json(request.body);
-});
+//   response.json(request.body);
+// });
 
-// del notes
-app.delete("/api/notes/:id", (request, response) => {
-  const id = Number(request.params.id);
-  notes = notes.filter((note) => note.id !== id);
-
-  response.status(204).end();
+// // del notes
+app.delete("/api/notes/:id", async (request, response) => {
+  Note.findById(request.params.id)
+    .then((note) => {
+      if (note) {
+        response.json(note);
+      } else {
+        response.status(404).end();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      response.status(500).end();
+    });
 });
 
 app.listen(PORT, () => {

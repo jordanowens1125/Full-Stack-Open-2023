@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "https://fso-part3-phonebook-gs39.onrender.com/api/persons";
+const baseUrl = process.env.REACT_APP_BASE_URL +'/api/persons';
 
 const getAll = () => {
   const request = axios.get(baseUrl);
