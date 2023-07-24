@@ -10,6 +10,7 @@ function App() {
   const [newNote, setNewNote] = useState("");
   const [showAll, setShowAll] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+
   useEffect(() => {
     try {
       noteService.getAll().then((initialNotes) => {
@@ -49,10 +50,34 @@ function App() {
       id: notes.length + 1,
     };
 
-    noteService.create(noteObject).then((returnedNote) => {
-      setNotes(notes.concat(returnedNote));
-      setNewNote("");
-    });
+    noteService
+      .create(noteObject)
+      .then((returnedNote) => {
+        setNotes(notes.concat(returnedNote));
+        setNewNote("");
+      })
+      .catch((error) => {
+        setErrorMessage(`An error has occurred: ${error.message}`);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
+        // setNotes(notes.filter((n) => n.id !== id));
+      });
+  };
+
+  const deleteNote = (id) => {
+    noteService
+      .deleteNote(id)
+      .then(() => {
+        setNotes(notes.filter((note) => note.id !== id));
+      })
+      .catch((error) => {
+        setErrorMessage(`An error has occurred: ${error.message}`);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
+        // setNotes(notes.filter((n) => n.id !== id));
+      });
   };
 
   const notesToShow = showAll
@@ -74,6 +99,7 @@ function App() {
             key={note.id}
             note={note}
             toggleImportance={() => toggleImportanceOf(note.id)}
+            deleteNote={deleteNote}
           />
         ))}
       </ul>

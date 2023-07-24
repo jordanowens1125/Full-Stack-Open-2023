@@ -58,11 +58,11 @@ function App() {
         .then((response) => {
           setPersons(persons.concat(response));
           setSuccessMessage(`${response.name} has been created!`);
+          resetValues();
         })
-        .catch(() => {
-          setErrorMessage(`${newName} was not created`);
+        .catch((error) => {
+          setErrorMessage(error.response.data.error);
         });
-      resetValues();
     } else {
       let input = window.confirm(
         `${newName} is already added to the phonebook, replace the old number with a new one?`
@@ -78,14 +78,18 @@ function App() {
       .update(person.id, { name: newName, number: newNumber })
       .then((response) => {
         setPersons(
-          persons.map((user) => (user.id === person.id ? response : user))
+          persons.map((user) =>
+            user.id === person.id
+              ? { id: person.id, name: newName, number: newNumber }
+              : user
+          )
         );
+        resetValues();
         setSuccessMessage(`${person.name} has been updated!`);
       })
       .catch(() => {
         setErrorMessage(`${person} was not updated`);
       });
-    resetValues();
   };
 
   const deletePerson = (person) => {
@@ -123,9 +127,7 @@ function App() {
         setNewName={setNewName}
         setNewNumber={setNewNumber}
       />
-
       <h2>Numbers</h2>
-      {}
       <Persons persons={results} deletePerson={deletePerson} />
     </div>
   );
