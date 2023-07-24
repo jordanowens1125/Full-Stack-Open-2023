@@ -6,10 +6,9 @@ if (process.argv.length < 3) {
   process.exit(1);
 }
 
-const password = process.env.password;
 
 mongoose.set("strictQuery", false);
-mongoose.connect(url);
+// mongoose.connect(url);
 
 const personSchema = new mongoose.Schema({
   name: String,

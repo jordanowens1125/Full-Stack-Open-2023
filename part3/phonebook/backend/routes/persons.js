@@ -67,5 +67,4 @@ router.put("/:id", (req, res, next) => {
     .catch((error) => next(error));
 });
 
-
 module.exports = router;

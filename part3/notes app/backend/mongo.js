@@ -31,11 +31,11 @@ const Note = mongoose.model("Note", noteSchema);
 //   mongoose.connection.close();
 // });
 
-  Note.find({}).then((result) => {
-    result.forEach((note) => {
-      console.log(note);
-    });
-    mongoose.connection.close();
+Note.find({}).then((result) => {
+  result.forEach((note) => {
+    console.log(note);
   });
+  mongoose.connection.close();
+});
 
 // mongodb+srv://Main:<password>@rappers.n8q3hzf.mongodb.net/?retryWrites=true&w=majority
