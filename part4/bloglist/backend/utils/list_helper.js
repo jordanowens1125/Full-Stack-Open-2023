@@ -15,7 +15,6 @@ const favoriteBlog = (blogs) => {
   let fav = blogs[0];
   for (let i = 1; i < blogs.length; i++) {
     if (blogs[i].likes > fav.likes) {
-      console.log(blogs[i]);
       fav = blogs[i];
     }
   }
