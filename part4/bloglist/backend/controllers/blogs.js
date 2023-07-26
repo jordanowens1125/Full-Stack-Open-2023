@@ -21,6 +21,7 @@ blogsRouter.post("/", async (request, response) => {
 blogsRouter.put("/:id", async (request, response) => {
   const id = request.params.id;
   const result = await Blog.findByIdAndUpdate(id, request.body);
+  
   response.status(200).json(result);
 });
 
