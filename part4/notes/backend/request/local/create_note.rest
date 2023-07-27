@@ -1,0 +1,9 @@
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjY0YzA3YzZhM2M1ODgwZmIzMzUyN2M2NSIsImlhdCI6MTY5MDM4OTIzOSwiZXhwIjoxNjkwMzkyODM5fQ.c4MdVs_BlqR5IWgmu2QeLGHr8YvTtobNmMbiuf9PKfw
+
+{
+    "content": "user id of note creator is at the start sent along the request",
+    "important": true, 
+    "userId": "64c07c6a3c5880fb33527c65"
+}

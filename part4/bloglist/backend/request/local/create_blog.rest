@@ -1,9 +1,9 @@
-POST http://localhost:3003/api/blogs
+POST {{host}}/api/blogs
 Content-Type: application/json
+Authorization: {{token}}
 
 {
     "title": "Blog title",
-    "author": "Johnny Bravo",
     "url":"https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     "likes" :0
 }

@@ -1,0 +1,8 @@
+POST {{host}}/api/users
+Content-Type: application/json
+
+{
+    "username": "Lotus Flower",
+    "name": "Mike and Ike",
+    "password": ""
+}
