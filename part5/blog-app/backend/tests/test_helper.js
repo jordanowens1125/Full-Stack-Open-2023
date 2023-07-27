@@ -22,7 +22,7 @@ const initialUsers = [
 const nonExistingId = async () => {
   const blog = new Blog({
     title: "Demo Blog",
-    author: "64c15b272782b443ec0dcaf7",
+    author: "J.Jimmy",
     url: "https://www.youtube.com/watch?v=4FhsjQ2xess&t=650s",
   });
   await blog.save();
@@ -44,13 +44,15 @@ const usersInDb = async () => {
 const initialBlogs = [
   {
     title: "Demo Test",
-    author: demoUserID,
+    author: 'Timmy Turner',
     url: "https://www.youtube.com/watch?v=-ZWwmVDQ20Q",
+    user: demoUserID,
   },
   {
     title: "Demo Blog",
-    author: demoUserID,
+    author: 'The life of a panda',
     url: "https://www.youtube.com/watch?v=-ZWwmVDQ20Q",
+    user: demoUserID,
   },
 ];
 

@@ -2,6 +2,6 @@ POST {{host}}/api/login
 Content-Type: application/json
 
 {
-    "username": "Lotus Flower",
-    "password": ""
+    "username": "Misty Ricky",
+    "password": "salainen"
 }

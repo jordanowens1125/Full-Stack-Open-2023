@@ -11,34 +11,31 @@ let token = "";
 beforeAll(async () => {
   const result = await api.post("/api/login").send({
     username: "Misty Ricky",
-    password: "salainen",
+    password: process.env.password,
   });
 
   token = result.request.response._body.token;
 });
 
 beforeEach(async () => {
-  const userID = await helper.demoUserID();
-  await Blog.deleteMany({});
-  const blogObjects = helper.initialBlogs.map(
-    (blog) => new Blog({ ...blog, author: userID })
-  );
-  const blogArray = blogObjects.map((blog) => blog.save());
   await User.deleteMany({ username: { $ne: "Misty Ricky" } });
   const userObjects = helper.initialUsers.map((user) => new User(user));
   const userArray = userObjects.map((user) => user.save());
+  const userID = await helper.demoUserID();
+  await Blog.deleteMany({});
+  const blogObjects = helper.initialBlogs.map(
+    (blog) => new Blog({ ...blog, user: userID })
+  );
+  const blogArray = blogObjects.map((blog) => blog.save());
 
   await Promise.all([...blogArray, ...userArray]);
-});
-
-test("", () => {
-  expect(1).toBe(1);
 });
 
 test("a valid blog can be added", async () => {
   const newBlog = {
     title: "async/await simplifies making async calls",
     url: "Only the world knows what going on",
+    author: "Tony the Tiger",
   };
 
   await api
@@ -56,10 +53,9 @@ test("a valid blog can be added", async () => {
 });
 
 test("A blog with no likes defaults to 0", async () => {
-  const currentUsers = await helper.usersInDb();
   const newBlog = {
     title: "async/await simplifies making async calls",
-    author: currentUsers[0].id,
+    author: "John Wayne",
     url: "Only the world knows what going on",
   };
 
@@ -82,9 +78,8 @@ test("Verify unique identifier property is id", async () => {
 });
 
 test("A blog without a title will return with a status code of 400", async () => {
-  const currentUsers = await helper.usersInDb();
   const newBlog = {
-    author: currentUsers[0].id,
+    author: "Jimmy Crickets",
     url: "Only the world knows what going on",
   };
 
@@ -96,10 +91,9 @@ test("A blog without a title will return with a status code of 400", async () =>
 });
 
 test("A blog without a url will return with a status code of 400", async () => {
-  const currentUsers = await helper.usersInDb();
   const newBlog = {
     title: "async/await simplifies making async calls",
-    author: currentUsers[0].id,
+    author: "Jimmy Crickets",
   };
   await api
     .post("/api/blogs")

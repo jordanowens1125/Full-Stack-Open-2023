@@ -5,19 +5,11 @@ const api = supertest(app);
 const helper = require("./test_helper");
 const User = require("../models/user");
 
-let token = "";
-
 beforeEach(async () => {
-  await User.deleteMany({ username: { $ne: "Misty Ricky" } });
+  await User.deleteMany();
   const userObjects = helper.initialUsers.map((user) => new User(user));
   const promiseArray = userObjects.map((user) => user.save());
   await Promise.all(promiseArray);
-
-  const result = await api.post("api/login").send({
-    username: "Misty Ricky",
-    password: "salainen",
-  });
-  console.log(result);
 });
 
 describe("A new user can be created with a valid username and email", () => {
