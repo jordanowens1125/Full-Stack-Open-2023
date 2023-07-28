@@ -40,6 +40,11 @@ app.use(middleware.tokenExtractor);
 app.use("/api/blogs", middleware.userExtractor, blogsRouter);
 app.use("/api/users", usersRouter);
 
+if (process.env.NODE_ENV.trim() === "test") {
+  const testingRouter = require("./controllers/testing");
+  app.use("/api/testing", testingRouter);
+}
+
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
 

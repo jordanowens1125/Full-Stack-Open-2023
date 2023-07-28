@@ -1,6 +1,5 @@
 import "./App.css";
-import { useState, useEffect, useRef } from "react";
-import Togglable from "./components/Toggleable";
+import { useState, useEffect } from "react";
 import noteService from "./services/notes";
 import Notification from "./components/Notification";
 import Footer from "./components/Footer";
@@ -12,7 +11,6 @@ function App() {
   const [notes, setNotes] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
   const [user, setUser] = useState(null);
-  const noteFormRef = useRef();
 
   useEffect(() => {
     try {
@@ -57,7 +55,7 @@ function App() {
       ) : (
         <div>
           <p>{user.name} is logged in</p>
-          <NewNoteForm createNote={addNote} ref={noteFormRef} />
+          <NewNoteForm createNote={addNote} />
           <button onClick={() => logOut()}>Log Out</button>
         </div>
       )}

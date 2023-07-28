@@ -3,9 +3,11 @@ const Note = ({ note, toggleImportance, deleteNote }) => {
 
   return (
     <li className="note">
-      {note.content}
-      <button onClick={toggleImportance}>{label}</button>
-      <button onClick={() => deleteNote(note.id)}>Delete</button>
+      <span>{note.content}</span>
+      <button onClick={toggleImportance} className="importance-toggle">
+        {label}
+      </button>
+      {/* <button onClick={() => deleteNote(note.id)}>Delete</button> */}
     </li>
   );
 };

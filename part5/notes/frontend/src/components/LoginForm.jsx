@@ -1,7 +1,7 @@
 import { useState } from "react";
 import loginService from "../services/login";
 import noteService from "../services/notes";
-import Togglable from "./Toggleable";
+import Togglable from "./Togglable";
 
 const LoginForm = ({ setErrorMessage, setUser }) => {
   const [username, setUsername] = useState("");
@@ -38,17 +38,22 @@ const LoginForm = ({ setErrorMessage, setUser }) => {
           placeholder="Username"
           onChange={(e) => setUsername(e.currentTarget.value)}
           value={username}
+          id="Username"
         />
         <label htmlFor="">Password:</label>
         <input
           placeholder="Password"
           onChange={(e) => setPassword(e.currentTarget.value)}
           value={password}
+          type="password"
+          id="Password"
         />
         <button type="button" onClick={setDemoCredentials}>
           Set Demo User Credentials
         </button>
-        <button type="submit">Log In</button>
+        <button type="submit" id="login-button">
+          Log In
+        </button>
       </form>
     </Togglable>
   );

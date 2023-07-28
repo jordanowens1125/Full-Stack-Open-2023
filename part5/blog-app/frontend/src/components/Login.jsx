@@ -22,6 +22,7 @@ const Login = ({
           placeholder="Username"
           onChange={(e) => setUsername(e.currentTarget.value)}
           value={username}
+          id="Username"
         />
         <label>Password: </label>
         <input
@@ -29,8 +30,11 @@ const Login = ({
           type="password"
           value={password}
           onChange={(e) => setPassword(e.currentTarget.value)}
+          id="Password"
         />
-        <button type="submit">Login</button>
+        <button type="submit" id="login-button">
+          Login
+        </button>
         <button type="button" onClick={setDemo}>
           Set Demo Login
         </button>
@@ -38,7 +42,6 @@ const Login = ({
     </Togglable>
   );
 };
-
 
 Login.propTypes = {
   handleLogin: PropTypes.func.isRequired,

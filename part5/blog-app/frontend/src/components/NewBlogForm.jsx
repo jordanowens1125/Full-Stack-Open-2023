@@ -31,13 +31,14 @@ const NewBlogForm = ({ blogs, setBlogs, setNotification, setSuccess }) => {
 
   return (
     <>
-      <Togglable buttonLabel='New Blog'>
+      <Togglable buttonLabel="New Blog">
         <form onSubmit={creatBlog}>
           <label>Blog Title:</label>
           <input
             placeholder="title"
             value={title}
             onChange={(e) => setTitle(e.currentTarget.value)}
+            id="title"
           />
 
           <label>URL:</label>
@@ -45,6 +46,7 @@ const NewBlogForm = ({ blogs, setBlogs, setNotification, setSuccess }) => {
             placeholder="URL"
             value={url}
             onChange={(e) => setURL(e.currentTarget.value)}
+            id="url"
           />
 
           <label>Author:</label>
@@ -52,6 +54,7 @@ const NewBlogForm = ({ blogs, setBlogs, setNotification, setSuccess }) => {
             placeholder="Author"
             value={author}
             onChange={(e) => setAuthor(e.currentTarget.value)}
+            id="author"
           />
           <button type="submit">Create Blog</button>
         </form>
