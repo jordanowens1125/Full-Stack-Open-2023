@@ -1,0 +1,16 @@
+{
+  "rest-client.environmentVariables": {
+    "shared": {
+      "nonProdToken": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkxvdHVzIEZsb3dlciIsImlkIjoiNjRjMWJiYWUzMTU1ODc5Njk0YmM2MTMyIiwiaWF0IjoxNjkwNDI1NTIwLCJleHAiOjE2OTA0MjkxMjB9.9Dpkzdj3Wf2WJQ4GClg4DS3S8fztGGEL_O2JdOWXm2Q",
+      "password": "salainen",
+      "username": "Misty Ricky"
+    },
+    "dev": {
+      "host": "http://localhost:3003",
+      "token": "{{$shared nonProdToken}}",
+      "password": "{{$shared password}}"
+    },
+
+    "production": {}
+  }
+}
