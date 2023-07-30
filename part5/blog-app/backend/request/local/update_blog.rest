@@ -1,0 +1,9 @@
+PUT {{host}}/api/blogs/64bfe8e8e41da85d327cecb
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+    "title": "Blog title",
+    "url":"https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "likes" :0
+}

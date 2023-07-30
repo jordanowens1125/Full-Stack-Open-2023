@@ -1,0 +1,30 @@
+
+sequenceDiagram
+    participant browser
+    participant server
+    
+    browser->>server: Upon page load, browser sends GET  request to https://studies.cs.helsinki.fi/exampleapp/spa
+    activate server
+
+    server-->>browser: HTML document
+    deactivate server
+    
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server-->>browser: the main.css file
+    deactivate server
+    
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+    activate server
+    server-->>browser: the spa.js file
+    deactivate server
+    
+    note right of browser: Function is added to http request to 
+    note right of browser: set the notes and run the redraw function once the xhttp request state is updated
+    note right of browser: On submit function is added to the form element with the id of 'notes_form'
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: [{ "content": "HTML is easy", "date": "2023-1-1" }, ... ]
+    deactivate server
+    note right of browser: Browser runs redraw notes function with new notes if status 200 and readyState is 4
