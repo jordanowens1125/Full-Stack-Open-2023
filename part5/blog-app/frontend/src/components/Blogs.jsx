@@ -37,9 +37,18 @@ const Blogs = ({ blogs, setBlogs, user }) => {
       } catch (error) {}
     }
   };
+
+  const sortedBlogs = (blogs) => {
+    let result = blogs.sort(function (a, b) {
+      return parseFloat(b.likes) - parseFloat(a.likes);
+    });
+    return result;
+  };
+
+  const sortedList = sortedBlogs(blogs)
   return (
     <>
-      {blogs.map((blog) => (
+      {sortedList.map((blog) => (
         <Blog
           key={blog.id}
           blog={blog}

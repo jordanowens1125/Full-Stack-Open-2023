@@ -56,7 +56,7 @@ const NewBlogForm = ({ blogs, setBlogs, setNotification, setSuccess }) => {
             onChange={(e) => setAuthor(e.currentTarget.value)}
             id="author"
           />
-          <button type="submit">Create Blog</button>
+          <button type="submit" id="submit-blog-button">Create Blog</button>
         </form>
       </Togglable>
     </>

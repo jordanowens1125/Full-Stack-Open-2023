@@ -43,7 +43,14 @@ describe("Blog app", function () {
       });
     });
 
-    it("a new blog can be created", function () {});
+    it("a new blog can be created", function () {
+      cy.get("button:contains('New Blog')").click();
+      cy.get("#title").type("Demo Blog 2");
+      cy.get("#url").type("random url");
+      cy.get("#author").type("A random author");
+      cy.get("#submit-blog-button").click();
+      cy.get(".blog").eq(1).should("contain", "Demo Blog 2");
+    });
 
     it("A user can like a blog", function () {
       cy.get("button:contains('View')").click();
@@ -68,6 +75,29 @@ describe("Blog app", function () {
       cy.get("#login-button").click();
       cy.get("button:contains('View')").click();
       cy.contains("Delete").should("not.exist");
+    });
+
+    describe("New blogs", function () {
+      it.only("Blogs are ordered according to likes", function () {
+        cy.get("button:contains('New Blog')").click();
+        cy.get("#title").type("Demo Blog 2");
+        cy.get("#url").type("random url");
+        cy.get("#author").type("A random author");
+        cy.get("#submit-blog-button").click();
+
+        cy.get("button:contains('View')").eq(0).click();
+        cy.get("button:contains('View')").eq(0).click();
+
+        cy.get(".blog").contains("Demo Blog 2")
+          .find("button:contains('Like')")
+          .click()
+          .click()
+          .click() ;
+        // cy.get("button:contains('Like')").eq(1).click();
+
+        cy.get(".blog").eq(1).should("contain", "another note cypress");
+        cy.get(".blog").eq(0).should("contain", "Demo Blog 2");
+      });
     });
   });
 });
