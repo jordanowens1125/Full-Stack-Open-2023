@@ -10,7 +10,7 @@ function App() {
   const dispatch = useDispatch();
  useEffect(() => {
    dispatch(initializeNotes());
- }, [dispatch]); //eslint-disable-line
+ }, [dispatch]); 
   
   return (
     <div className="App">

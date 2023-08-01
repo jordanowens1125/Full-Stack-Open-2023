@@ -1,0 +1,59 @@
+{
+  "notes": [
+    {
+      "content": "the app state is in redux store",
+      "important": true,
+      "id": 1
+    },
+    {
+      "content": "ok",
+      "important": false,
+      "id": 2
+    },
+    {
+      "content": "loll",
+      "important": false,
+      "id": 3
+    },
+    {
+      "content": "ded",
+      "important": false,
+      "id": 4
+    },
+    {
+      "content": "ok",
+      "important": false,
+      "id": 5
+    },
+    {
+      "content": "lol",
+      "important": false,
+      "id": 6
+    },
+    {
+      "content": "lol",
+      "important": true,
+      "id": 7
+    },
+    {
+      "content": "ok",
+      "important": false,
+      "id": 8
+    },
+    {
+      "content": "lol",
+      "important": false,
+      "id": 9
+    },
+    {
+      "content": "ok",
+      "important": true,
+      "id": 10
+    },
+    {
+      "content": "okok",
+      "important": true,
+      "id": 11
+    }
+  ]
+}
