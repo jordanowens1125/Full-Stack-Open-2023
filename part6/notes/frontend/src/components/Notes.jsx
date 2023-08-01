@@ -1,10 +1,16 @@
- import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleImportanceOf } from "../reducers/noteReducer";
 
 const Notes = ({ setErrorMessage }) => {
-
   const dispatch = useDispatch();
-  const notes = useSelector((state) => state.notes);
+  const notes = useSelector(({ filter, notes }) => {
+  if ( filter === 'ALL' ) {
+    return notes
+  }
+  return filter  === 'IMPORTANT' 
+    ? notes.filter(note => note.important)
+    : notes.filter(note => !note.important)
+})
 
   const Note = ({ note, handleClick }) => {
     return (
@@ -14,7 +20,7 @@ const Notes = ({ setErrorMessage }) => {
       </li>
     );
   };
-  
+
   return (
     <>
       <ul>
