@@ -7,7 +7,8 @@ const NewNoteForm = () => {
   const dispatch = useDispatch();
 
   const noteFormRef = useRef();
-  const addNote = (event) => {
+
+  const addNote = async (event) => {
     event.preventDefault();
     noteFormRef.current.toggleVisibility();
     const content = event.target.note.value;
