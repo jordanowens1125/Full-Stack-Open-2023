@@ -7,6 +7,7 @@ import Users from "./pages/Users";
 import Login from "./pages/Login";
 import Notification from "./components/Notification";
 import Navbar from "./components/Navbar";
+import { Container } from "@mui/material";
 
 const App = () => {
   const [notes, setNotes] = useState([
@@ -49,7 +50,7 @@ const App = () => {
     : null;
 
   return (
-    <div className="container">
+    <Container>
       <Navbar user={user} />
       <Notification message={message} />
       <Routes>
@@ -66,7 +67,7 @@ const App = () => {
         <br />
         <em>Note app, Department of Computer Science 2022</em>
       </div>
-    </div>
+    </Container>
   );
 };
 

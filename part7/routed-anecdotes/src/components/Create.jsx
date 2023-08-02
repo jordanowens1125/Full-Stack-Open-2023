@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useField } from "../hooks/useField";
 
 const Create = ({ setAnecdotes, anecdotes, setNotification }) => {
-  const [content, setContent] = useState("");
-  const [author, setAuthor] = useState("");
-  const [info, setInfo] = useState("");
+  const { reset: resetContent, ...content } = useField("text");
+  const { reset: resetAuthor, ...author } = useField("text");
+  const { reset: resetInfo, ...info } = useField("text");
 
+  const resetInputs = () => {
+    resetContent();
+    resetAuthor();
+    resetInfo();
+  };
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     const anecdote = {
@@ -15,10 +21,8 @@ const Create = ({ setAnecdotes, anecdotes, setNotification }) => {
       id: Math.round(Math.random() * 10000),
     };
     setAnecdotes(anecdotes.concat(anecdote));
-    setNotification(`A new anecdote${content} has been created!`)
-    setAuthor("");
-    setContent("");
-    setInfo("");
+    setNotification(`A new anecdote${content} has been created!`);
+    resetInputs();
   };
 
   return (
@@ -27,29 +31,20 @@ const Create = ({ setAnecdotes, anecdotes, setNotification }) => {
       <form onSubmit={handleSubmit}>
         <div>
           content
-          <input
-            name="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
+          <input {...content} />
         </div>
         <div>
           author
-          <input
-            name="author"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-          />
+          <input {...author} />
         </div>
         <div>
           url for more info
-          <input
-            name="info"
-            value={info}
-            onChange={(e) => setInfo(e.target.value)}
-          />
+          <input {...info} />
         </div>
-        <button type="submit">create</button>
+        <button type="submit">Create</button>
+        <button type="button" onClick={resetInputs}>
+          Reset
+        </button>
       </form>
     </div>
   );
