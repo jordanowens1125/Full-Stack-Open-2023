@@ -1,10 +1,6 @@
 import { Link } from "react-router-dom";
 import { AppBar, Button, Toolbar, IconButton } from "@mui/material";
 
-const padding = {
-  padding: 5,
-};
-
 const NavbarComponent = ({ user }) => {
   return (
     <AppBar position="static">

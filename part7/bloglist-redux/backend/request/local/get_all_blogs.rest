@@ -1,0 +1,3 @@
+GET {{host}}/api/blogs
+Content-Type: application/json
+Authorization: Bearer needNewTokenHere
