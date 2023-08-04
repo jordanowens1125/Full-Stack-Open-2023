@@ -5,7 +5,7 @@ const Blog = ({ blog, handleLike, handleDelete, user }) => {
   const [hide, setHide] = useState(true);
   return (
     <div className="blog">
-      <Link to={`/blogs/$${blog.id}`}>Title: {blog.title}</Link>
+      <Link to={`/blogs/${blog.id}`}>Title: {blog.title}</Link>
 
       <p>Author: {blog?.author || "error"} </p>
 

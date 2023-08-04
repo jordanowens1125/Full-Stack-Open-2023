@@ -3,26 +3,18 @@ import Togglable from "./Toggleable";
 import { useDispatch } from "react-redux";
 import { addNewBlog } from "../reducers/blogsReducer";
 
-const NewBlogForm = ({ setNotification, setSuccess }) => {
+const NewBlogForm = () => {
   const [title, setTitle] = useState("");
   const [url, setURL] = useState("");
   const [author, setAuthor] = useState("");
   const dispatch = useDispatch();
+
   const creatBlog = async (e) => {
     e.preventDefault();
-    try {
-      dispatch(addNewBlog({ title, author, url }));
-      setAuthor("");
-      setNotification(
-        `A new blog ${title} by ${author || ""} has been created!`
-      );
-      setSuccess(true);
-      setTitle("");
-      setURL("");
-    } catch (error) {
-      setNotification(error.response.data.error);
-      setSuccess(false);
-    }
+    dispatch(addNewBlog({ title, author, url }));
+    setAuthor("");
+    setTitle("");
+    setURL("");
   };
 
   return (

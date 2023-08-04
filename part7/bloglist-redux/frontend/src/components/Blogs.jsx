@@ -1,17 +1,25 @@
 import Blog from "./Blog";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeBlog, updateBlogState } from "../reducers/blogsReducer";
+import {
+  removeBlog,
+  likeBlog,
+  initializeBlogs,
+} from "../reducers/blogsReducer";
 
 const Blogs = () => {
   const blogs = useSelector((state) => state.blogs);
   const user = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
-  useEffect(() => {}, [blogs]);
+  
+  useEffect(() => {
+    dispatch(initializeBlogs());
+  }, [dispatch]);
+
   const handleLike = async (blog) => {
     try {
-      dispatch(updateBlogState(blog));
+      dispatch(likeBlog(blog));
     } catch (error) {
       console.log(error);
     }

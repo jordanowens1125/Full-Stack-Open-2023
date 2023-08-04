@@ -15,6 +15,16 @@ const getAll = () => {
   return request.then((response) => response.data);
 };
 
+const getUser = (id) => {
+  const token = getToken();
+  const config = {
+    headers: { Authorization: token },
+  };
+  const request = axios.get(baseUrl + `/${id}`, config);
+  return request.then((response) => response.data);
+};
+
 export default {
   getAll,
+  getUser,
 };

@@ -10,11 +10,11 @@ usersRouter.post("/", async (request, response) => {
     });
   }
   if (password.length < 3) {
-     return response.status(401).json({
-       error: "password must be a least 3 characters in length!",
-     });
+    return response.status(401).json({
+      error: "password must be a least 3 characters in length!",
+    });
   }
-  
+
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(password, saltRounds);
 
@@ -35,6 +35,18 @@ usersRouter.get("/", async (request, response) => {
     important: 1,
   });
   response.json(users);
+});
+
+usersRouter.get("/:id", async (request, response) => {
+  const user = await User.findById(request.params.id).populate("blogs", {
+    title: 1,
+    url: 1,
+    likes: 1,
+  });
+  if (user) {
+    response.json(user);
+  }
+  response.status(404);
 });
 
 module.exports = usersRouter;

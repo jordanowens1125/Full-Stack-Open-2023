@@ -1,5 +1,6 @@
 const blogsRouter = require("express").Router();
 const Blog = require("../models/blog");
+const Comment = require("../models/comment");
 
 blogsRouter.get("/", async (request, response) => {
   const blogs = await Blog.find({}).populate("user", {
@@ -11,7 +12,15 @@ blogsRouter.get("/", async (request, response) => {
 
 blogsRouter.get("/:id", async (request, response) => {
   const id = request.params.id;
-  const blog = await Blog.findById(id);
+  const blog = await Blog.findById(id)
+    .populate("user", {
+      username: 1,
+      name: 1,
+    })
+    .populate("comments", {
+      text: 1,
+      likes: 1,
+    });
   response.status(200).json(blog);
 });
 
@@ -53,12 +62,21 @@ blogsRouter.put("/:id", async (request, response) => {
   // }
 });
 
+blogsRouter.post("/:id/comments", async (request, response) => {
+  const id = request.params.id;
+  const comment = await Comment.create(request.body);
+  await Blog.findByIdAndUpdate(id, {
+    $addToSet: {
+      comments: comment.id,
+    },
+  });
+  response.status(200).json(comment);
+});
+
 blogsRouter.delete("/:id", async (request, response) => {
   const id = request.params.id;
   const user = request.user;
   const blog = await Blog.findById(id);
-  console.log(blog.user);
-  console.log(user.id);
   if (blog.user.toString() === user.id.toString()) {
     await Blog.findByIdAndDelete(id);
     response.status(204).end();
